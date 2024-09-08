@@ -7,6 +7,7 @@ typedef struct _pathEl{
 }pathEl;
 // Estrutura de dados do tipo pilha.
 typedef struct stack_{
+	pathEl *topEl;
 	pathEl *items;
 } stack;
 
@@ -70,11 +71,12 @@ pathEl* removeEl(stack* list);
  * presente na pilha.
  * 
  * @param list: estrutura do tipo pilha.
- * @param el: elemento buscado.
+ * @param line: a linha do elemento buscado.
+ * @param collumn: a coluna do elemento buscado.
  * @return o endereço do elemento encontrado: 
  * end != NULL (êxito), end == NULL (erro).
  */
-pathEl* searchEl(stack* list, pathEl* el);
+pathEl* searchEl(stack* list, int line, int collumn);
 
 /*
  * @brief Exibe no console uma pilha.

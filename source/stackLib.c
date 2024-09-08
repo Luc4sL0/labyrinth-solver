@@ -5,6 +5,7 @@
 stack* createStack(){
 	stack* list = malloc(sizeof(stack));
 	(*list).items = NULL;
+	(*list).topEl = NULL;
 	return list;
 }
 pathEl* createEl(int line, int collumn){
@@ -24,6 +25,8 @@ int addEl(stack* list, pathEl* element){
 		}
 		else
 			(*list).items = element;
+		
+		(*list).topEl = element;
 		return 0;
 	}
 	return -1;
@@ -38,22 +41,24 @@ pathEl* removeEl(stack* list){
 					aux = (*aux).next;
 				removedEl = (*aux).next;
 				(*aux).next = NULL;
+				(*list).topEl = aux;
 			}
 			else{
 				removedEl = aux;
 				(*list).items = NULL;
+				(*list).topEl = NULL;
 			}
 		}
 	}
 	return removedEl;
 }
-pathEl* searchEl(stack* list, pathEl* el){
+pathEl* searchEl(stack* list, int line, int collumn){
 	pathEl* searchedEl = NULL;
 	if(list != NULL){
 		pathEl* aux = (*list).items;
 		if(aux != NULL){
 			while(aux != NULL){
-				if((*aux).line == (*el).line && (*aux).collumn == (*el).collumn)
+				if((*aux).line == line && (*aux).collumn == collumn)
 					searchedEl = aux;
 				aux = (*aux).next;
 			}
@@ -63,8 +68,7 @@ pathEl* searchEl(stack* list, pathEl* el){
 }
 void showStack(stack list){
 	while (list.items != NULL){
-		printf("%d,%d\n", list.items->collumn, list.items->line);
+		printf("%d,%d\n", list.items->collumn, 9 - list.items->line);
 		list.items = list.items->next;
 	}
-	printf("\n");
 }

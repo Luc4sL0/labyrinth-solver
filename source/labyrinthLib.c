@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "labyrinthLib.h"
-#include "stackLib.h"
 
-//TO-DO: Essa função está horrível, nojenta! Melhorar.
+/*TO-DO: Essa função é terrível! Vou 
+aprimorar os processos de análise de 
+arquivos posteriormente.*/
 bool checkLabyrinthFile(){ 
     FILE *file = fopen("labirinto.txt", "r");
     if(file == NULL){
@@ -41,52 +42,51 @@ void showLabyrinth(labyrinth lab){
         }
 }
 void findLabEnter(labyrinth lab, int* line, int* collumn){
-    for(int i = 0; i < MAX_ELEMENTS; i++)
-        for(int j = 0; j < MAX_ELEMENTS; j++)
-            if(lab.allEls[i][j].value == LAB_ENTER){
-                (*line) = i;
-                (*collumn) = j;
-            }
+    if(!lab.isInvalid)
+        for(int i = 0; i < MAX_ELEMENTS; i++)
+            for(int j = 0; j < MAX_ELEMENTS; j++)
+                if(lab.allEls[i][j].value == LAB_ENTER){
+                    (*line) = i;
+                    (*collumn) = j;
+                }
 }
-stack findLabPath(labyrinth lab){
+stack* findLabPath(labyrinth lab){
     stack* currentPath = createStack();
-    int currentLine, currentCollumn; 
-    findLabEnter(lab, &currentLine, &currentCollumn);
-    addEl(currentPath, createEl(currentLine, currentCollumn));
-
     if(!lab.isInvalid){
+        int currentLine, currentCollumn; 
+        findLabEnter(lab, &currentLine, &currentCollumn);
+        addEl(currentPath, createEl(currentLine, currentCollumn));
         while(lab.allEls[currentLine][currentCollumn].value != LAB_EXIT){
+            bool moved = false;
             for(int i = -1; i < 2; i++){
-                if (currentLine + i < MAX_ELEMENTS){
-                    if (lab.allEls[currentLine + i][currentCollumn].value == LAB_PATH && !lab.allEls[currentLine + i][currentCollumn].pathInvalid){
-                        if(searchEl(currentPath, &lab.allEls[currentLine + i][currentCollumn]) == NULL)
-                            addEl(currentPath, createEl(currentLine, currentCollumn));
-                        else{
-                            lab.allEls[currentLine][currentCollumn].pathInvalid = true;
-                            removeEl(currentPath);
-                        }
-                        currentLine = currentLine + i;
-                        break;
-                    }
-                }
-                for(int j = -1; j < 2 && i == 0; j++){
-                    if (currentLine + i < MAX_ELEMENTS && currentCollumn + j < MAX_ELEMENTS){
-                        if (lab.allEls[currentLine + i][currentCollumn +j].value == LAB_PATH && !lab.allEls[currentLine + i][currentCollumn + j].pathInvalid){
-                            if(searchEl(currentPath, &lab.allEls[currentLine + i][currentCollumn + j]) == NULL)
-                                addEl(currentPath, createEl(currentLine, currentCollumn));
-                            else{
-                                lab.allEls[currentLine][currentCollumn].pathInvalid = true;
-                                removeEl(currentPath);
+                for(int j = -1; j < 2; j++){
+                    if ((i == 0 || j == 0) && (i != j)){
+                        int newLine = currentLine + i;
+                        int newCollumn = currentCollumn + j;
+                        if (newLine < MAX_ELEMENTS && newCollumn < MAX_ELEMENTS && newLine >= 0 && newCollumn >= 0){
+                            if ((lab.allEls[newLine][newCollumn].value == LAB_PATH || lab.allEls[newLine][newCollumn].value == LAB_EXIT) && !lab.allEls[newLine][newCollumn].pathInvalid){
+                                if(searchEl(currentPath, newLine, newCollumn) == NULL){
+                                    addEl(currentPath, createEl(newLine, newCollumn));
+                                    currentLine = newLine;
+                                    currentCollumn = newCollumn;
+                                    moved = true;
+                                    break;
+                                }
                             }
-                            currentLine = currentLine + i;
-                            currentCollumn = currentCollumn + j;
-                            break;
                         }
                     }
+                
                 }
-            }  
+                if(moved) break;
+            }
+            if(!moved){
+                lab.allEls[currentLine][currentCollumn].pathInvalid = true;
+                free(removeEl(currentPath));
+                currentLine = (*currentPath).topEl->line;
+                currentCollumn = (*currentPath).topEl->collumn;
+            }
         }
     }
-    return *currentPath;
+    return currentPath;
 }
 

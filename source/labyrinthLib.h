@@ -2,6 +2,7 @@
 #define LABYRINTH_H
 
 #include <stdbool.h>
+#include "stackLib.h"
 
 /* Quantidade máxima de posições 
 presentes em um labirinto. */
@@ -54,9 +55,21 @@ void showLabyrinth(labyrinth lab);
  * @param line: endereço de um número inteiro 
  * (onde a linha da entrada será gravada).
  * 
- * @param line: endereço de um número inteiro 
+ * @param collumn: endereço de um número inteiro 
  * (onde a coluna da entrada será gravada).
  */
 void findLabEnter(labyrinth lab, int* line, int* collumn);
 
+/*
+ * @brief Encontra o caminho necessário para 
+ * sair de um determinado labirinto.
+ * 
+ * Essa função possui a finalidade de registrar 
+ * em uma pilha, o caminho percorrido até a saída
+ * de um labirinto.
+ * 
+ * @param lab: estrutura do tipo labirinto.
+ * @return a pilha com o caminho.
+ */
+stack* findLabPath(labyrinth lab);
 #endif
