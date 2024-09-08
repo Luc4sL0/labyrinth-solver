@@ -1,10 +1,13 @@
 #ifndef STACKLIB_H
 #define STACKLIB_H
 
+/* Estrutura de dados que armazena o
+caminho percorrido. */
 typedef struct _pathEl{
 	int line, collumn;
 	struct _pathEl* next;
 }pathEl;
+
 // Estrutura de dados do tipo pilha.
 typedef struct stack_{
 	pathEl *topEl;
