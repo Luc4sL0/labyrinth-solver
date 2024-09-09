@@ -13,14 +13,14 @@ presentes em um labirinto. */
 #define LAB_PATH '0'
 #define LAB_EXIT 'S'
 
-/* Estrutura que corresponde a cada 
-posição presente no labirinto. */
+/* Estrutura que corresponde a cada posição 
+da matriz presente no labirinto. */
 typedef struct{
     char value;
     bool pathInvalid;
 } matrixEl;
 
-// Estrutura que corresponde ao labirinto.
+/* Estrutura que corresponde ao labirinto. */
 typedef struct{
     bool isInvalid;
     matrixEl allEls[MAX_ELEMENTS][MAX_ELEMENTS];
@@ -32,9 +32,10 @@ typedef struct{
  * Essa função possui a finalidade de ler o 
  * labirinto presente no arquivo "labirinto.txt".
  * 
+ * @param fileName: nome do arquivo.
  * @return a estrutura do labirinto.
  */
-labyrinth readLabyrinthFile();
+labyrinth readLabyrinthFile(char fileName[]);
 
 /*
  * @brief Escreve o labirinto no console.
@@ -72,4 +73,5 @@ void findLabEnter(labyrinth lab, int* line, int* collumn);
  * @return a pilha com o caminho.
  */
 stack* findLabPath(labyrinth lab);
+
 #endif

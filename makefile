@@ -21,13 +21,15 @@ $(PROJ_NAME): $(OBJ)
 	@ echo ' '
 
 ./objects/%.o: ./source/%.c ./source/%.h
-	@ echo 'Construindo target usando o compilador GCC: $<'
+	@ echo 'Construindo o primeiro target (.c e .h) usando o compilador GCC: $<'
 	$(CC) $< $(CC_FLAGS) -o $@
+	@ echo 'Operação concluída com êxito - STATUS 0: $@'
 	@ echo ' '
 
 ./objects/main.o: ./source/main.c $(H_SOURCE)
-	@ echo 'Construindo target usando o compilador GCC: $<'
+	@ echo 'Construindo o segundo target (main.c) usando o compilador GCC: $<'
 	$(CC) $< $(CC_FLAGS) -o $@
+	@ echo 'Operação concluída com êxito - STATUS 0: $@'
 	@ echo ' '
 
 objFolder:

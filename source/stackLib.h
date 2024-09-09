@@ -8,7 +8,7 @@ typedef struct _pathEl{
 	struct _pathEl* next;
 }pathEl;
 
-// Estrutura de dados do tipo pilha.
+/* Estrutura de dados do tipo pilha. */
 typedef struct stack_{
 	pathEl *topEl;
 	pathEl *items;
@@ -23,7 +23,7 @@ typedef struct stack_{
  * @return o endereço de uma nova pilha alocada 
  * na memória.
  */
-stack* createStack();
+stack* createStack(void);
 
 /*
  * @brief Cria um novo elemento.
@@ -85,7 +85,7 @@ pathEl* searchEl(stack* list, int line, int collumn);
  * @brief Exibe no console uma pilha.
  * 
  * Essa função possui a finalidade de exibir,
- * caso seja possível, todos os elemento 
+ * caso seja possível, todos os elementos 
  * presentes na pilha.
  * 
  * @param list: estrutura do tipo pilha.

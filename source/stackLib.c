@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "stackLib.h"
 
-stack* createStack(){
+stack* createStack(void){
 	stack* list = malloc(sizeof(stack));
 	(*list).items = NULL;
 	(*list).topEl = NULL;

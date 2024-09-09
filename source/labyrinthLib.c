@@ -1,23 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "labyrinthLib.h"
+#include "systemDebug.h"
 
-/*TO-DO: Essa função é terrível! Vou 
-aprimorar os processos de análise de 
-arquivos posteriormente.*/
-bool checkLabyrinthFile(){ 
-    FILE *file = fopen("labirinto.txt", "r");
-    if(file == NULL){
-        fclose(file);
-        return false;
+bool checkLabyrinthFile(char* fileName){ 
+    FILE *file = fopen(fileName, "r");
+    if(file != NULL){
+        int charCounter = 1;
+        char charCurrent;
+        while((charCurrent = fgetc(file)) != EOF){
+            if(charCurrent != LAB_ENTER && charCurrent != LAB_PATH && charCurrent != LAB_WALL 
+            && charCurrent != LAB_EXIT && charCurrent != '\n'){
+                fclose(file); 
+                DEBUG_SYS(errorHandler[1], fileName);
+                return false;
+            }
+            charCounter++;
+        }
+        if(charCounter == (MAX_ELEMENTS* MAX_ELEMENTS) + MAX_ELEMENTS){
+            fclose(file); 
+            return true;
+        }
+        DEBUG_SYS(errorHandler[2], fileName, (MAX_ELEMENTS*MAX_ELEMENTS), charCounter - 10);
     }
-    fclose(file);
-    return true;
+    else
+        DEBUG_SYS(errorHandler[0], fileName);
+    fclose(file); 
+    return false;
 }
-labyrinth readLabyrinthFile(){
+labyrinth readLabyrinthFile(char* fileName){
     labyrinth newLab;
-    if(checkLabyrinthFile()){
-        FILE *file = fopen("labirinto.txt", "r");
+    if(checkLabyrinthFile(fileName)){
+        FILE *file = fopen(fileName, "r");
         for(int i = 0; i < MAX_ELEMENTS; i++)
             for(int j = 0; j < MAX_ELEMENTS; j++){
                 char c = fgetc(file);
@@ -48,6 +62,7 @@ void findLabEnter(labyrinth lab, int* line, int* collumn){
                 if(lab.allEls[i][j].value == LAB_ENTER){
                     (*line) = i;
                     (*collumn) = j;
+                    break;
                 }
 }
 stack* findLabPath(labyrinth lab){
