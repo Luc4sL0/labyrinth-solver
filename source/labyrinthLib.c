@@ -95,10 +95,17 @@ stack* findLabPath(labyrinth lab){
                 if(moved) break;
             }
             if(!moved){
-                lab.allEls[currentLine][currentCollumn].pathInvalid = true;
-                free(removeEl(currentPath));
-                currentLine = (*currentPath).topEl->line;
-                currentCollumn = (*currentPath).topEl->collumn;
+                if((*currentPath).items->next != NULL){
+                    lab.allEls[currentLine][currentCollumn].pathInvalid = true;
+                    free(removeEl(currentPath));
+                    currentLine = (*currentPath).topEl->line;
+                    currentCollumn = (*currentPath).topEl->collumn;
+                }
+                else{
+                    free(removeEl(currentPath));
+                    DEBUG_SYS(processHandler[0]);
+                    break;
+                }
             }
         }
     }
