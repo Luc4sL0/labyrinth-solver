@@ -17,15 +17,10 @@ pathEl* createEl(int line, int collumn){
 }
 int addEl(stack* list, pathEl* element){
 	if(list != NULL){
-		pathEl* aux = (*list).items;
-		if(aux != NULL){
-			while((*aux).next != NULL)
-				aux = (*aux).next;
-			(*aux).next = element;
-		}
+		if((*list).items != NULL)
+			(*list).topEl->next = element;
 		else
 			(*list).items = element;
-		
 		(*list).topEl = element;
 		return 0;
 	}
@@ -37,14 +32,14 @@ pathEl* removeEl(stack* list){
 		if((*list).items != NULL){
 			pathEl* aux = (*list).items;
 			if((*aux).next != NULL){
-				while((*aux).next->next != NULL)
+				while((*aux).next != (*list).topEl)
 					aux = (*aux).next;
-				removedEl = (*aux).next;
-				(*aux).next = NULL;
+				removedEl = (*list).topEl;
 				(*list).topEl = aux;
+				(*aux).next = NULL;
 			}
 			else{
-				removedEl = aux;
+				removedEl = (*list).topEl;
 				(*list).items = NULL;
 				(*list).topEl = NULL;
 			}
@@ -58,8 +53,10 @@ pathEl* searchEl(stack* list, int line, int collumn){
 		pathEl* aux = (*list).items;
 		if(aux != NULL){
 			while(aux != NULL){
-				if((*aux).line == line && (*aux).collumn == collumn)
+				if((*aux).line == line && (*aux).collumn == collumn){
 					searchedEl = aux;
+					break;
+				}
 				aux = (*aux).next;
 			}
 		}

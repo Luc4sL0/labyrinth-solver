@@ -11,13 +11,13 @@ presentes em um labirinto. */
 #define LAB_ENTER 'E'
 #define LAB_WALL 'X'
 #define LAB_PATH '0'
+#define LAB_PATH_INVALID '1'
 #define LAB_EXIT 'S'
 
 /* Estrutura que corresponde a cada posição 
 da matriz presente no labirinto. */
 typedef struct{
     char value;
-    bool pathInvalid;
 } matrixEl;
 
 /* Estrutura que corresponde ao labirinto. */

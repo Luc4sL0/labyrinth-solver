@@ -38,7 +38,6 @@ labyrinth readLabyrinthFile(char* fileName){
                 while (c == '\n')
                     c = fgetc(file);
                 newLab.allEls[i][j].value = c;
-                newLab.allEls[i][j].pathInvalid = false;
             }
         newLab.isInvalid = false;
         fclose(file);
@@ -79,7 +78,7 @@ stack* findLabPath(labyrinth lab){
                         int newLine = currentLine + i;
                         int newCollumn = currentCollumn + j;
                         if (newLine < MAX_ELEMENTS && newCollumn < MAX_ELEMENTS && newLine >= 0 && newCollumn >= 0){
-                            if ((lab.allEls[newLine][newCollumn].value == LAB_PATH || lab.allEls[newLine][newCollumn].value == LAB_EXIT) && !lab.allEls[newLine][newCollumn].pathInvalid){
+                            if ((lab.allEls[newLine][newCollumn].value == LAB_PATH || lab.allEls[newLine][newCollumn].value == LAB_EXIT)){
                                 if(searchEl(currentPath, newLine, newCollumn) == NULL){
                                     addEl(currentPath, createEl(newLine, newCollumn));
                                     currentLine = newLine;
@@ -96,14 +95,14 @@ stack* findLabPath(labyrinth lab){
             }
             if(!moved){
                 if((*currentPath).items->next != NULL){
-                    lab.allEls[currentLine][currentCollumn].pathInvalid = true;
+                    lab.allEls[currentLine][currentCollumn].value = LAB_PATH_INVALID;
                     free(removeEl(currentPath));
                     currentLine = (*currentPath).topEl->line;
                     currentCollumn = (*currentPath).topEl->collumn;
                 }
                 else{
                     free(removeEl(currentPath));
-                    DEBUG_SYS(processHandler[0]);
+                    DEBUG_SYS("%s", processHandler[0]);
                     break;
                 }
             }
