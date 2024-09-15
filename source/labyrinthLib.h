@@ -14,16 +14,10 @@ presentes em um labirinto. */
 #define LAB_PATH_INVALID '1'
 #define LAB_EXIT 'S'
 
-/* Estrutura que corresponde a cada posição 
-da matriz presente no labirinto. */
-typedef struct{
-    char value;
-} matrixEl;
-
 /* Estrutura que corresponde ao labirinto. */
 typedef struct{
     bool isInvalid;
-    matrixEl allEls[MAX_ELEMENTS][MAX_ELEMENTS];
+    char allEls[MAX_ELEMENTS][MAX_ELEMENTS];
 } labyrinth;
 
 /*
@@ -56,10 +50,10 @@ void showLabyrinth(labyrinth lab);
  * @param line: endereço de um número inteiro 
  * (onde a linha da entrada será gravada).
  * 
- * @param collumn: endereço de um número inteiro 
+ * @param column: endereço de um número inteiro 
  * (onde a coluna da entrada será gravada).
  */
-void findLabEnter(labyrinth lab, int* line, int* collumn);
+void findLabEnter(labyrinth lab, int* line, int* column);
 
 /*
  * @brief Encontra o caminho necessário para 

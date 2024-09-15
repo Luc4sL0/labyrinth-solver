@@ -37,7 +37,7 @@ labyrinth readLabyrinthFile(char* fileName){
                 char c = fgetc(file);
                 while (c == '\n')
                     c = fgetc(file);
-                newLab.allEls[i][j].value = c;
+                newLab.allEls[i][j] = c;
             }
         newLab.isInvalid = false;
         fclose(file);
@@ -50,39 +50,39 @@ void showLabyrinth(labyrinth lab){
     if(!lab.isInvalid)
         for(int i = 0; i < MAX_ELEMENTS; i++){
             for(int j = 0; j < MAX_ELEMENTS; j++)
-                printf("%c", lab.allEls[i][j].value);
+                printf("%c", lab.allEls[i][j]);
             printf("\n");
         }
 }
-void findLabEnter(labyrinth lab, int* line, int* collumn){
+void findLabEnter(labyrinth lab, int* line, int* column){
     if(!lab.isInvalid)
         for(int i = 0; i < MAX_ELEMENTS; i++)
             for(int j = 0; j < MAX_ELEMENTS; j++)
-                if(lab.allEls[i][j].value == LAB_ENTER){
+                if(lab.allEls[i][j] == LAB_ENTER){
                     (*line) = i;
-                    (*collumn) = j;
+                    (*column) = j;
                     break;
                 }
 }
 stack* findLabPath(labyrinth lab){
     stack* currentPath = createStack();
     if(!lab.isInvalid){
-        int currentLine, currentCollumn; 
-        findLabEnter(lab, &currentLine, &currentCollumn);
-        addEl(currentPath, createEl(currentLine, currentCollumn));
-        while(lab.allEls[currentLine][currentCollumn].value != LAB_EXIT){
+        int currentLine, currentColumn; 
+        findLabEnter(lab, &currentLine, &currentColumn);
+        addEl(currentPath, createEl(currentLine, currentColumn));
+        while(lab.allEls[currentLine][currentColumn] != LAB_EXIT){
             bool moved = false;
             for(int i = -1; i < 2; i++){
                 for(int j = -1; j < 2; j++){
                     if ((i == 0 || j == 0) && (i != j)){
                         int newLine = currentLine + i;
-                        int newCollumn = currentCollumn + j;
-                        if (newLine < MAX_ELEMENTS && newCollumn < MAX_ELEMENTS && newLine >= 0 && newCollumn >= 0){
-                            if ((lab.allEls[newLine][newCollumn].value == LAB_PATH || lab.allEls[newLine][newCollumn].value == LAB_EXIT)){
-                                if(searchEl(currentPath, newLine, newCollumn) == NULL){
-                                    addEl(currentPath, createEl(newLine, newCollumn));
+                        int newColumn = currentColumn + j;
+                        if (newLine < MAX_ELEMENTS && newColumn < MAX_ELEMENTS && newLine >= 0 && newColumn >= 0){
+                            if (lab.allEls[newLine][newColumn] == LAB_PATH || lab.allEls[newLine][newColumn] == LAB_EXIT){
+                                if(searchEl(currentPath, newLine, newColumn) == NULL){
+                                    addEl(currentPath, createEl(newLine, newColumn));
                                     currentLine = newLine;
-                                    currentCollumn = newCollumn;
+                                    currentColumn = newColumn;
                                     moved = true;
                                     break;
                                 }
@@ -95,10 +95,10 @@ stack* findLabPath(labyrinth lab){
             }
             if(!moved){
                 if((*currentPath).items->next != NULL){
-                    lab.allEls[currentLine][currentCollumn].value = LAB_PATH_INVALID;
+                    lab.allEls[currentLine][currentColumn] = LAB_PATH_INVALID;
                     free(removeEl(currentPath));
                     currentLine = (*currentPath).topEl->line;
-                    currentCollumn = (*currentPath).topEl->collumn;
+                    currentColumn = (*currentPath).topEl->collumn;
                 }
                 else{
                     free(removeEl(currentPath));
