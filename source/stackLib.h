@@ -1,3 +1,9 @@
+/*
+Grupo: 
+    - Lucas Lopes Baroni (2024.1.08.017)
+    - João Antônio Siqueira ()
+*/
+
 #ifndef STACKLIB_H
 #define STACKLIB_H
 
