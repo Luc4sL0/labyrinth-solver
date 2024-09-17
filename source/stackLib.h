@@ -98,4 +98,16 @@ pathEl* searchEl(stack* list, int line, int collumn);
  */
 void showStack(stack list);
 
+/*
+ * @brief Libera o espaço alocado por uma pilha.
+ * 
+ * Essa função possui a finalidade de desalocar,
+ * todos os elementos de uma pilha.
+ * 
+ * @param list: estrutura do tipo pilha.
+ * @return o status da liberação: 
+ * 0 (êxito), -1 (erro).
+ */
+int deleteStack(stack *list);
+
 #endif

@@ -13,6 +13,8 @@ Exemplo: "/.labyrinthGame labirintos/labirinto2.txt"
 int main(int argc, char *argv[]){
     char* fileDirectory = "labirintos/labirinto1.txt";
     if(argc >= 2) fileDirectory = argv[1];
-    showStack(*findLabPath(readLabyrinthFile(fileDirectory)));
+    stack* labPath = findLabPath(readLabyrinthFile(fileDirectory));
+    showStack(*labPath);
+    deleteStack(labPath);
     return 0;
 }

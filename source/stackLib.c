@@ -69,3 +69,15 @@ void showStack(stack list){
 		list.items = list.items->next;
 	}
 }
+int deleteStack(stack *list){
+	if(list != NULL){
+		while ((*list).items != NULL){
+			pathEl *aux = (*list).items;
+			(*list).items = (*list).items->next;
+			free(aux);
+		}
+		free(list);
+		return 0;
+	}
+	return -1;
+}
