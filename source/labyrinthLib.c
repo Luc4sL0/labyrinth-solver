@@ -21,7 +21,7 @@ bool checkLabyrinthFile(char* fileName){
             fclose(file); 
             return true;
         }
-        DEBUG_SYS(errorHandler[2], fileName, (MAX_ELEMENTS*MAX_ELEMENTS), charCounter - 10);
+        DEBUG_SYS(errorHandler[2], fileName, (MAX_ELEMENTS*MAX_ELEMENTS), charCounter - MAX_ELEMENTS);
     }
     else
         DEBUG_SYS(errorHandler[0], fileName);

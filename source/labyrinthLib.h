@@ -1,7 +1,7 @@
 /*
 Grupo: 
     - Lucas Lopes Baroni (2024.1.08.017)
-    - João Antônio Siqueira ()
+    - João Antônio Siqueira (2024.1.08.028)
 */
 
 #ifndef LABYRINTH_H
