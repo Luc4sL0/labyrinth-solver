@@ -11,7 +11,7 @@ Grupo:
 
 /* Remova o comentário do termo (printf) para obter 
 mensagens de erro no terminal. */
-#define DEBUG_SYS //printf
+#define DEBUG_SYS printf
 
 /* Estrutura que armazena todos as mensagens de erro.*/
 char* errorHandler[] = {
@@ -21,6 +21,7 @@ char* errorHandler[] = {
 };
 
 char* processHandler[] = {
+    "O labirinto não é válido e/ou não possui uma entrada.\n",
     "O labirinto processado não possui solução.\n",
 };
 

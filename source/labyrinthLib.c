@@ -54,21 +54,25 @@ void showLabyrinth(labyrinth lab){
             printf("\n");
         }
 }
-void findLabEnter(labyrinth lab, int* line, int* column){
+int findLabEnter(labyrinth lab, int* line, int* column){
     if(!lab.isInvalid)
         for(int i = 0; i < MAX_ELEMENTS; i++)
             for(int j = 0; j < MAX_ELEMENTS; j++)
                 if(lab.allEls[i][j] == LAB_ENTER){
                     (*line) = i;
                     (*column) = j;
-                    break;
+                    return 0;
                 }
+    return -1;
 }
 stack* findLabPath(labyrinth lab){
     stack* currentPath = createStack();
     if(!lab.isInvalid){
         int currentLine, currentColumn; 
-        findLabEnter(lab, &currentLine, &currentColumn);
+        if(findLabEnter(lab, &currentLine, &currentColumn) == -1){
+            DEBUG_SYS("%s", processHandler[0]);
+            return currentPath;
+        }
         addEl(currentPath, createEl(currentLine, currentColumn));
         while(lab.allEls[currentLine][currentColumn] != LAB_EXIT){
             bool moved = false;
@@ -102,7 +106,7 @@ stack* findLabPath(labyrinth lab){
                 }
                 else{
                     free(removeEl(currentPath));
-                    DEBUG_SYS("%s", processHandler[0]);
+                    DEBUG_SYS("%s", processHandler[1]);
                     break;
                 }
             }

@@ -58,8 +58,10 @@ void showLabyrinth(labyrinth lab);
  * 
  * @param column: endereço de um número inteiro 
  * (onde a coluna da entrada será gravada).
+ * 
+ * @return o status da operação: 0 (êxito), -1 (erro).
  */
-void findLabEnter(labyrinth lab, int* line, int* column);
+int findLabEnter(labyrinth lab, int* line, int* column);
 
 /*
  * @brief Encontra o caminho necessário para 
